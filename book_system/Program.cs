@@ -21,8 +21,8 @@ abstract class Book : IBook
     // Constructor
     public Book(string title, string author, double price)
     {
-        Title = title ?? "Unknown";
-        Author = author ?? "Unknown";
+        Title = title;
+        Author = author;
         Price = price;
         TotalBooks++;
     }
@@ -46,13 +46,12 @@ abstract class Book : IBook
     public abstract void Display();
 
     // Operator Overloading - comparison
-    public static bool operator ==(Book? a, Book? b)
+    public static bool operator ==(Book a, Book b)
     {
-        if (a == null || b == null) return false;
         return a.Price == b.Price;
     }
 
-    public static bool operator !=(Book? a, Book? b)
+    public static bool operator !=(Book a, Book b)
     {
         return !(a == b);
     }
@@ -64,11 +63,11 @@ abstract class Book : IBook
         return book;
     }
 
-    public override bool Equals(object? obj) => base.Equals(obj);
+    public override bool Equals(object obj) => base.Equals(obj);
     public override int GetHashCode() => base.GetHashCode();
 }
 
-// 
+// Ashifur-Rahman
 // Fiction book - Inherits from Book
 class FictionBook : Book
 {
@@ -78,7 +77,7 @@ class FictionBook : Book
     public FictionBook(string title, string author, double price, string genre) 
         : base(title, author, price)
     {
-        Genre = genre ?? "Unknown";
+        Genre = genre;
     }
 
     // Constructor Overloading - without genre
@@ -100,7 +99,7 @@ class FictionBook : Book
     }
 }
 
-// Mahabuba Mim
+// Mahabuba-Mim
 // Non-Fiction book - Inherits from Book
 class NonFictionBook : Book
 {
@@ -110,7 +109,7 @@ class NonFictionBook : Book
     public NonFictionBook(string title, string author, double price, string category) 
         : base(title, author, price)
     {
-        Category = category ?? "General";
+        Category = category;
     }
 
     // Constructor Overloading - without category
@@ -131,7 +130,8 @@ class NonFictionBook : Book
         Console.WriteLine($"[NON-FICTION] {Title} by {Author} | Category: {Category} | Price: ${Price:F2}");
     }
 }
-// Saidi
+
+// Homayed-Saidi
 class Bookstore
 {
     private List<Book> books = new List<Book>();
@@ -156,6 +156,33 @@ class Bookstore
             Console.Write($"{i + 1}. ");
             books[i].Display();
         }
+    }
+
+    public void CompareBooks()
+    {
+        if (books.Count < 2)
+        {
+            Console.WriteLine("Need at least 2 books to compare!");
+            return;
+        }
+
+        Console.Write("Enter first book number: ");
+        if (int.TryParse(Console.ReadLine(), out int idx1) && idx1 > 0 && idx1 <= books.Count)
+        {
+            Console.Write("Enter second book number: ");
+            if (int.TryParse(Console.ReadLine(), out int idx2) && idx2 > 0 && idx2 <= books.Count)
+            {
+                // Operator Overloading
+                if (books[idx1 - 1] == books[idx2 - 1])
+                    Console.WriteLine("Both books have the same price!");
+                else
+                    Console.WriteLine("Books have different prices.");
+            }
+            else
+                Console.WriteLine("Invalid choice!");
+        }
+        else
+            Console.WriteLine("Invalid choice!");
     }
 
     public void ApplyDiscount()
@@ -196,14 +223,14 @@ class Bookstore
         if (int.TryParse(Console.ReadLine(), out int idx) && idx > 0 && idx <= books.Count)
         {
             // Copy Constructor
-            if (books[idx - 1] is FictionBook fictionBook)
+            if (books[idx - 1] is FictionBook)
             {
-                var copy = new FictionBook(fictionBook);
+                var copy = new FictionBook((FictionBook)books[idx - 1]);
                 AddBook(copy);
             }
-            else if (books[idx - 1] is NonFictionBook nonFictionBook)
+            else if (books[idx - 1] is NonFictionBook)
             {
-                var copy = new NonFictionBook(nonFictionBook);
+                var copy = new NonFictionBook((NonFictionBook)books[idx - 1]);
                 AddBook(copy);
             }
         }
@@ -212,7 +239,7 @@ class Bookstore
     }
 }
 
-// Forhath Hosain Ome
+// Forhath-Hosain-Ome
 class Program
 {
     static void Main()
@@ -228,14 +255,16 @@ class Program
         {
             Console.WriteLine("\n--- Menu ---");
             Console.WriteLine("1. View All Books");
-            Console.WriteLine("2. Add a Book");
-            Console.WriteLine("3. Apply Discount");
-            Console.WriteLine("4. Copy a Book");
-            Console.WriteLine("5. Show Total Books");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine("2. Add Fiction Book");
+            Console.WriteLine("3. Add Non-Fiction Book");
+            Console.WriteLine("4. Compare Book Prices");
+            Console.WriteLine("5. Apply Discount");
+            Console.WriteLine("6. Copy a Book");
+            Console.WriteLine("7. Show Total Books");
+            Console.WriteLine("8. Exit");
             Console.Write("\nChoice: ");
 
-            string? choice = Console.ReadLine();
+            string choice = Console.ReadLine();
 
             switch (choice)
             {
@@ -243,18 +272,24 @@ class Program
                     store.DisplayAllBooks();
                     break;
                 case "2":
-                    AddBook(store);
+                    AddFictionBook(store);
                     break;
                 case "3":
-                    store.ApplyDiscount();
+                    AddNonFictionBook(store);
                     break;
                 case "4":
-                    store.CopyBook();
+                    store.CompareBooks();
                     break;
                 case "5":
-                    Book.ShowTotal();
+                    store.ApplyDiscount();
                     break;
                 case "6":
+                    store.CopyBook();
+                    break;
+                case "7":
+                    Book.ShowTotal();
+                    break;
+                case "8":
                     Console.WriteLine("Goodbye!");
                     return;
                 default:
@@ -264,38 +299,37 @@ class Program
         }
     }
 
-    static void AddBook(Bookstore store)
+    static void AddFictionBook(Bookstore store)
     {
         Console.Write("Title: ");
-        string? title = Console.ReadLine();
+        string title = Console.ReadLine();
         Console.Write("Author: ");
-        string? author = Console.ReadLine();
+        string author = Console.ReadLine();
         Console.Write("Price: ");
-        if (!double.TryParse(Console.ReadLine(), out double price))
-        {
-            Console.WriteLine("Invalid price!");
-            return;
-        }
-
-        Console.WriteLine("\nBook Type:");
-        Console.WriteLine("1. Fiction");
-        Console.WriteLine("2. Non-Fiction");
-        Console.Write("Choice: ");
-        string? type = Console.ReadLine();
-
-        if (type == "1")
+        if (double.TryParse(Console.ReadLine(), out double price))
         {
             Console.Write("Genre: ");
-            string? genre = Console.ReadLine();
+            string genre = Console.ReadLine();
             store.AddBook(new FictionBook(title, author, price, genre));
         }
-        else if (type == "2")
+        else
+            Console.WriteLine("Invalid price!");
+    }
+
+    static void AddNonFictionBook(Bookstore store)
+    {
+        Console.Write("Title: ");
+        string title = Console.ReadLine();
+        Console.Write("Author: ");
+        string author = Console.ReadLine();
+        Console.Write("Price: ");
+        if (double.TryParse(Console.ReadLine(), out double price))
         {
             Console.Write("Category: ");
-            string? category = Console.ReadLine();
+            string category = Console.ReadLine();
             store.AddBook(new NonFictionBook(title, author, price, category));
         }
         else
-            Console.WriteLine("Invalid choice!");
+            Console.WriteLine("Invalid price!");
     }
 }
