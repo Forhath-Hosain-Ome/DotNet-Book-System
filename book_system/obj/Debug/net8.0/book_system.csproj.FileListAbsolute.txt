@@ -1,0 +1,14 @@
+/home/dev_f/dotNet/book_system/book_system/bin/Debug/net8.0/book_system
+/home/dev_f/dotNet/book_system/book_system/bin/Debug/net8.0/book_system.deps.json
+/home/dev_f/dotNet/book_system/book_system/bin/Debug/net8.0/book_system.runtimeconfig.json
+/home/dev_f/dotNet/book_system/book_system/bin/Debug/net8.0/book_system.dll
+/home/dev_f/dotNet/book_system/book_system/bin/Debug/net8.0/book_system.pdb
+/home/dev_f/dotNet/book_system/book_system/obj/Debug/net8.0/book_system.GeneratedMSBuildEditorConfig.editorconfig
+/home/dev_f/dotNet/book_system/book_system/obj/Debug/net8.0/book_system.AssemblyInfoInputs.cache
+/home/dev_f/dotNet/book_system/book_system/obj/Debug/net8.0/book_system.AssemblyInfo.cs
+/home/dev_f/dotNet/book_system/book_system/obj/Debug/net8.0/book_system.csproj.CoreCompileInputs.cache
+/home/dev_f/dotNet/book_system/book_system/obj/Debug/net8.0/book_system.dll
+/home/dev_f/dotNet/book_system/book_system/obj/Debug/net8.0/refint/book_system.dll
+/home/dev_f/dotNet/book_system/book_system/obj/Debug/net8.0/book_system.pdb
+/home/dev_f/dotNet/book_system/book_system/obj/Debug/net8.0/book_system.genruntimeconfig.cache
+/home/dev_f/dotNet/book_system/book_system/obj/Debug/net8.0/ref/book_system.dll
